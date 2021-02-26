@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="LoginViewController" customModule="Project1" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="2kD-3x-Bcl">
+                                <rect key="frame" x="30" y="257" width="354" height="382"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="QL8-97-xzY">
+                                        <rect key="frame" x="0.0" y="0.0" width="354" height="51"/>
+                                        <color key="backgroundColor" red="0.61176470589999998" green="0.48627450979999998" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <segments>
+                                            <segment title="Login"/>
+                                            <segment title="Register"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="modeDidChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="gt1-Iq-1qP"/>
+                                        </connections>
+                                    </segmentedControl>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nyB-Gz-WvO">
+                                        <rect key="frame" x="0.0" y="83" width="354" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="QEk-Ib-QOg"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZD5-zZ-cJT">
+                                        <rect key="frame" x="0.0" y="166" width="354" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Re-enter Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gR0-aZ-N6r">
+                                        <rect key="frame" x="0.0" y="249" width="354" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ewv-HA-Dxb">
+                                        <rect key="frame" x="0.0" y="332" width="354" height="50"/>
+                                        <color key="backgroundColor" red="0.61176470589999998" green="0.48627450979999998" blue="0.027450980390000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="b1T-vF-e0w"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Submit">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="submitButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YLQ-vF-iVP"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <viewLayoutGuide key="safeArea" id="mFU-Hq-eUc"/>
+                                <constraints>
+                                    <constraint firstItem="gR0-aZ-N6r" firstAttribute="width" secondItem="QL8-97-xzY" secondAttribute="width" id="1iv-0h-AFY"/>
+                                    <constraint firstItem="gR0-aZ-N6r" firstAttribute="leading" secondItem="2kD-3x-Bcl" secondAttribute="leading" id="2Od-1n-aHM"/>
+                                    <constraint firstItem="ewv-HA-Dxb" firstAttribute="width" secondItem="gR0-aZ-N6r" secondAttribute="width" id="7AV-A9-eOt"/>
+                                    <constraint firstItem="ewv-HA-Dxb" firstAttribute="leading" secondItem="2kD-3x-Bcl" secondAttribute="leading" id="FEU-Ta-e1l"/>
+                                    <constraint firstItem="gR0-aZ-N6r" firstAttribute="width" secondItem="nyB-Gz-WvO" secondAttribute="width" id="IV3-3W-vJK"/>
+                                    <constraint firstItem="gR0-aZ-N6r" firstAttribute="height" secondItem="nyB-Gz-WvO" secondAttribute="height" id="NPj-g2-aXp"/>
+                                    <constraint firstItem="ewv-HA-Dxb" firstAttribute="width" secondItem="QL8-97-xzY" secondAttribute="width" id="eOf-7N-wH2"/>
+                                    <constraint firstItem="ZD5-zZ-cJT" firstAttribute="width" secondItem="QL8-97-xzY" secondAttribute="width" id="sih-kv-uqC"/>
+                                    <constraint firstItem="ZD5-zZ-cJT" firstAttribute="height" secondItem="nyB-Gz-WvO" secondAttribute="height" id="vdv-c3-rJB"/>
+                                    <constraint firstItem="ZD5-zZ-cJT" firstAttribute="leading" secondItem="2kD-3x-Bcl" secondAttribute="leading" id="x1q-Ut-Mpw"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" red="0.82745098039215681" green="0.81568627450980391" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="2kD-3x-Bcl" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="TjN-1G-2Wl"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2kD-3x-Bcl" secondAttribute="trailing" constant="30" id="WFh-MX-bd5"/>
+                            <constraint firstItem="2kD-3x-Bcl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="30" id="g7G-kF-QY3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="passwordReenterTextField" destination="gR0-aZ-N6r" id="3vL-Uh-mbf"/>
+                        <outlet property="passwordTextField" destination="ZD5-zZ-cJT" id="ZjD-rf-fZ0"/>
+                        <outlet property="submitButton" destination="ewv-HA-Dxb" id="Bqx-Xe-Onq"/>
+                        <outlet property="usernameTextField" destination="nyB-Gz-WvO" id="SqI-0j-sFF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="91" y="89"/>
+        </scene>
+    </scenes>
+</document>
