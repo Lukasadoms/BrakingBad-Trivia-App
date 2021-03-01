@@ -11,4 +11,5 @@ struct Account: Codable {
     
     let username: String
     var password: String
+    var isloggedIn: Bool
 }

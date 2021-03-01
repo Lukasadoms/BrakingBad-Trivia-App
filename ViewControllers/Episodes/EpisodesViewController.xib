@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EpisodesViewController" customModule="Project1" customModuleProvider="target">
+            <connections>
+                <outlet property="episodesTableView" destination="6f5-DD-DzB" id="uHK-wb-V5o"/>
+                <outlet property="view" destination="q4A-hl-mIG" id="MRd-B6-NgP"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="q4A-hl-mIG">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6f5-DD-DzB">
+                    <rect key="frame" x="0.0" y="114" width="414" height="728"/>
+                    <color key="backgroundColor" red="0.82745098039999998" green="0.81568627449999997" blue="0.50588235290000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="separatorColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="sectionIndexBackgroundColor" red="0.82745098039999998" green="0.81568627449999997" blue="0.50588235290000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episodes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZOI-ED-ynp">
+                    <rect key="frame" x="158" y="64" width="98.5" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s2P-7p-cu4">
+                    <rect key="frame" x="344" y="64" width="50" height="30"/>
+                    <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="UJO-aj-2fc"/>
+                    </constraints>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" title="Filter"/>
+                    <connections>
+                        <action selector="filterButtonPressed:" destination="-1" eventType="touchUpInside" id="Ffm-s6-SKI"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="j0P-CB-Rxl"/>
+            <color key="backgroundColor" red="0.82745098039999998" green="0.81568627449999997" blue="0.50588235290000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="ZOI-ED-ynp" firstAttribute="centerX" secondItem="q4A-hl-mIG" secondAttribute="centerX" id="Aqb-Ko-j5t"/>
+                <constraint firstAttribute="trailing" secondItem="6f5-DD-DzB" secondAttribute="trailing" id="EY3-pQ-UHJ"/>
+                <constraint firstItem="ZOI-ED-ynp" firstAttribute="top" secondItem="j0P-CB-Rxl" secondAttribute="top" constant="20" id="Heg-8h-3OW"/>
+                <constraint firstItem="j0P-CB-Rxl" firstAttribute="trailing" secondItem="s2P-7p-cu4" secondAttribute="trailing" constant="20" id="eEo-0S-veU"/>
+                <constraint firstItem="j0P-CB-Rxl" firstAttribute="bottom" secondItem="6f5-DD-DzB" secondAttribute="bottom" constant="20" id="gXR-fN-EdB"/>
+                <constraint firstItem="6f5-DD-DzB" firstAttribute="leading" secondItem="j0P-CB-Rxl" secondAttribute="leading" id="hb3-lq-mYM"/>
+                <constraint firstItem="6f5-DD-DzB" firstAttribute="top" secondItem="s2P-7p-cu4" secondAttribute="bottom" constant="20" id="s6r-pI-fvr"/>
+                <constraint firstItem="s2P-7p-cu4" firstAttribute="top" secondItem="j0P-CB-Rxl" secondAttribute="top" constant="20" id="vRk-g9-PbC"/>
+            </constraints>
+            <point key="canvasLocation" x="-854" y="31"/>
+        </view>
+    </objects>
+</document>

@@ -49,7 +49,7 @@ extension AccountManager {
         guard !isUsernameTaken(username) else {
             throw AccountManagerError.accountAlreadyExists
         }
-        var account = Account(username: username, password: password)
+        var account = Account(username: username, password: password, isloggedIn: true)
         UserDefaultsManager.saveAccount(&account)
         loggedInAccount = account
     }
