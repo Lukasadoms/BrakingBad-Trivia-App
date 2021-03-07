@@ -7,22 +7,28 @@
 
 import UIKit
 
-class CharactersViewController: UIViewController {
-    
+class CharactersViewController: ParentViewController {
     
     @IBOutlet weak var characterTableView: UITableView!
     var characters: [CharacterResponse] = []
+    var unfilteredCharacters: [CharacterResponse] = []
     var apiManager = APIManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let cellNib = UINib(nibName: "CharacterCell", bundle: nil)
-        characterTableView.register(cellNib, forCellReuseIdentifier: "CharacterCell")
-        characterTableView.dataSource = self
-        characterTableView.delegate = self
+        createSpinnerView()
+        getCharacters()
     }
     
     @IBAction func filterButtonTapped(_ sender: UIButton) {
+        let charactersFilterViewController = CharactersFilterViewController()
+        charactersFilterViewController.characters = characters
+        charactersFilterViewController.delegate = self
+        show(charactersFilterViewController, sender: nil)
+    }
+    @IBAction func resetButtonTapped(_ sender: UIButton) {
+        characters = unfilteredCharacters
+        characterTableView.reloadData()
     }
 }
 
@@ -34,10 +40,10 @@ extension CharactersViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CharacterCell", for: indexPath)
-        guard let characterCell = cell as? CharacterCell else { return cell }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GenericCell", for: indexPath)
+        guard let characterCell = cell as? GenericCell else { return cell }
         
-        characterCell.configureCharacterCell(characterTitle: characters[indexPath.row].name)
+        characterCell.configureCell(cellTitle: characters[indexPath.row].name)
         return characterCell
     }
 }
@@ -47,19 +53,49 @@ extension CharactersViewController: UITableViewDataSource {
 extension CharactersViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCharacter = characters[indexPath.row]
-        
-        apiManager.getCharacterQuotes(name: selectedCharacter.name, { [weak self] result in
+        let characterDetailViewController = CharacterDetailViewController()
+        characterDetailViewController.selectedCharacterName = selectedCharacter.name
+        show(characterDetailViewController, sender: nil)
+    }
+}
+
+// MARK: - API Calls
+
+extension CharactersViewController {
+    func getCharacters() {
+        apiManager.getCharacters({ [weak self] result in
             switch result {
-            case .success(let quotes):
+            case .success(let characters):
                 DispatchQueue.main.async {
-                    let characterDetailViewController = CharacterDetailViewController()
-                    characterDetailViewController.quotes = quotes
-                    characterDetailViewController.selectedCharacter = selectedCharacter
-                    self?.show(characterDetailViewController, sender: nil)
+                    self?.characters = characters
+                    self?.unfilteredCharacters = characters
+                    self?.updateUI()
                 }
             case .failure(let error):
                 print(error)
             }
         })
+    }
+}
+
+// MARK: - CharactersFilterViewControllerDelegate methods
+
+extension CharactersViewController: CharactersFilterViewControllerDelegate {
+    func charactersFilterApplied(filteredCharacters: [CharacterResponse]) {
+        characters = filteredCharacters
+        characterTableView.reloadData()
+    }
+}
+
+// MARK: - Helpers
+
+extension CharactersViewController {
+    func updateUI() {
+        let cellNib = UINib(nibName: "GenericCell", bundle: nil)
+        characterTableView.register(cellNib, forCellReuseIdentifier: "GenericCell")
+        characterTableView.dataSource = self
+        characterTableView.delegate = self
+        characterTableView.reloadData()
+        removeSpinnerView()
     }
 }

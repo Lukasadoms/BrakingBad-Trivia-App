@@ -18,41 +18,22 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func episodesButtonTapped(_ sender: UIButton) {
-        apiManager.getEpisodes({ [weak self] result in
-            switch result {
-            case .success(let episodes):
-                print(episodes)
-                DispatchQueue.main.async {
-                    let episodesViewController = EpisodesViewController()
-                    episodesViewController.episodes = episodes
-                    self?.show(episodesViewController, sender: nil)
-                }
-            case .failure(_):
-                print("error")
-            }
-        })
+        let episodesViewController = EpisodesViewController()
+        show(episodesViewController, sender: nil)
     }
     
     @IBAction func charactersButtonTapped(_ sender: UIButton) {
-        apiManager.getCharacters({ [weak self] result in
-            switch result {
-            case .success(let characters):
-                DispatchQueue.main.async {
-                    let charactersViewController = CharactersViewController()
-                    charactersViewController.characters = characters
-                    self?.show(charactersViewController, sender: nil)
-                }
-            case .failure(_):
-                print("error")
-            }
-        })
+        let charactersViewController = CharactersViewController()
+        show(charactersViewController, sender: nil)
+        
     }
     
     @IBAction func quotesButtonTapped(_ sender: UIButton) {
     }
     
     @IBAction func logoutButtonTapped(_ sender: UIButton) {
-        AccountManager.loggedInAccount = nil
+        var account = AccountManager.loggedInAccount!
+        UserDefaultsManager.updateLoginStatus(&account)
         dismiss(animated: true)
     }
     

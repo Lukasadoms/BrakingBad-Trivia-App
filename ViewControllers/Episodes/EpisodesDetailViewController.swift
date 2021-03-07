@@ -16,12 +16,14 @@ final class EpisodesDetailViewController: UIViewController {
     @IBOutlet weak var characterTableView: UITableView!
     
     var selectedEpisode: EpisodeResponse?
+    let apiManager = APIManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let cellNib = UINib(nibName: "CharacterCell", bundle: nil)
-        characterTableView.register(cellNib, forCellReuseIdentifier: "CharacterCell")
+        let cellNib = UINib(nibName: "GenericCell", bundle: nil)
+        characterTableView.register(cellNib, forCellReuseIdentifier: "GenericCell")
         characterTableView.dataSource = self
+        characterTableView.delegate = self
         configureView()
     }
     
@@ -43,12 +45,12 @@ extension EpisodesDetailViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CharacterCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GenericCell", for: indexPath)
         guard
-            let characterCell = cell as? CharacterCell,
+            let characterCell = cell as? GenericCell,
             let selectedEpisode = selectedEpisode else { return cell }
         
-        characterCell.configureCharacterCell(characterTitle: selectedEpisode.characters[indexPath.row])
+        characterCell.configureCell(cellTitle: selectedEpisode.characters[indexPath.row])
         return characterCell
     }
     
@@ -56,4 +58,19 @@ extension EpisodesDetailViewController: UITableViewDataSource {
         "Characters:"
     }
     
+}
+
+// MARK: - UITableViewDelegate Methods
+
+extension EpisodesDetailViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let selectedEpisode = selectedEpisode {
+            let selectedCharacter = selectedEpisode.characters[indexPath.row]
+            
+            let characterDetailViewController = CharacterDetailViewController()
+            characterDetailViewController.selectedCharacterName = selectedCharacter
+            show(characterDetailViewController, sender: nil)
+            
+        }
+    }
 }

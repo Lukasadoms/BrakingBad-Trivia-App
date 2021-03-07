@@ -7,22 +7,29 @@
 
 import UIKit
 
-class CharacterDetailViewController: UIViewController {
+class CharacterDetailViewController: ParentViewController, UITableViewDelegate {
     
     @IBOutlet weak var characterNameLabel: UILabel!
     @IBOutlet weak var characterDateOfBirthLabel: UILabel!
     @IBOutlet weak var quoteTableView: UITableView!
+    
     var quotes: [QuoteResponse] = []
     var selectedCharacter: CharacterResponse?
+    var selectedCharacterName: String?
+    var apiManager = APIManager()
+    var group = DispatchGroup()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let cellNib = UINib(nibName: "QuoteCell", bundle: nil)
-        quoteTableView.register(cellNib, forCellReuseIdentifier: "QuoteCell")
-        quoteTableView.dataSource = self
-        guard let selectedCharacter = selectedCharacter else { return }
-        characterNameLabel.text = "Name: \(selectedCharacter.name)"
-        characterDateOfBirthLabel.text = "DOB: \(selectedCharacter.birthday)"
+        createSpinnerView()
+        quoteTableView.delegate = self
+        group.enter()
+        group.enter()
+        getCharacterInfo()
+        getCharacterQuotes()
+        group.notify(queue: .main, execute: {
+            self.updateUI()
+        })
     }
 }
 
@@ -40,7 +47,53 @@ extension CharacterDetailViewController: UITableViewDataSource {
         quoteCell.configureQuoteCell(quoteTitle: quotes[indexPath.row].quote)
         return quoteCell
     }
+}
+
+extension CharacterDetailViewController {
+    func getCharacterInfo() {
+        if let selectedCharacterName = selectedCharacterName {
+            apiManager.getCharacterInfo(name: selectedCharacterName, { [weak self] result in
+                switch result {
+                case .success(let character):
+                    DispatchQueue.main.async {
+                        self?.selectedCharacter = character
+                        self?.group.leave()
+                    }
+                case .failure(let error):
+                    print(error)
+                    self?.group.leave()
+                }
+            })
+        }
+    }
     
-    
-    
+    func getCharacterQuotes() {
+        if let selectedCharacterName = selectedCharacterName {
+            apiManager.getCharacterQuotes(name: selectedCharacterName, { [weak self] result in
+                switch result {
+                case .success(let quotes):
+                    DispatchQueue.main.async {
+                        self?.quotes = quotes
+                        self?.group.leave()
+                    }
+                case .failure(let error):
+                    print(error)
+                    self?.group.leave()
+                }
+            })
+        }
+    }
+}
+
+extension CharacterDetailViewController {
+    func updateUI() {
+        let cellNib = UINib(nibName: "QuoteCell", bundle: nil)
+        quoteTableView.register(cellNib, forCellReuseIdentifier: "QuoteCell")
+        quoteTableView.dataSource = self
+        quoteTableView.reloadData()
+        guard let selectedCharacter = selectedCharacter else { return }
+        characterNameLabel.text = "Name: \(selectedCharacter.name)"
+        characterDateOfBirthLabel.text = "DOB: \(selectedCharacter.birthday)"
+        removeSpinnerView()
+    }
 }

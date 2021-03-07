@@ -7,29 +7,30 @@
 
 import UIKit
 
-final class EpisodesViewController: UIViewController {
+class EpisodesViewController: ParentViewController {
 
     @IBOutlet weak var episodesTableView: UITableView!
     
     var episodes: [EpisodeResponse] = []
+    var unfilteredEpisodes: [EpisodeResponse] = []
     var apiManager = APIManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
+        createSpinnerView()
+        getEpisodes()
     }
-    
-    private func setupTableView() {
-        let cellNib = UINib(nibName: "EpisodeCell", bundle: nil)
-        episodesTableView.register(cellNib, forCellReuseIdentifier: "EpisodeCell")
-        episodesTableView.dataSource = self
-        episodesTableView.delegate = self
-    }
-    
+
     @IBAction func filterButtonPressed(_ sender: Any) {
         let filterViewController = EpisodesFilterViewController()
+        filterViewController.delegate = self
         filterViewController.episodes = episodes
         show(filterViewController, sender: nil)
+    }
+    
+    @IBAction func resetButtonPressed(_ sender: Any) {
+        episodes = unfilteredEpisodes
+        episodesTableView.reloadData()
     }
 }
 
@@ -40,7 +41,8 @@ extension EpisodesViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var seasonEpisodes: [EpisodeResponse] = []
         for episode in episodes {
-            if Int(episode.season.trimmingCharacters(in: .whitespacesAndNewlines)) == section + 1 {
+            let episodeSeason = Int(episode.season.trimmingCharacters(in: .whitespacesAndNewlines))
+            if episodeSeason == section + 1 {
                 seasonEpisodes.append(episode)
             }
         }
@@ -48,8 +50,8 @@ extension EpisodesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "EpisodeCell", for: indexPath)
-        guard let episodeCell = cell as? EpisodeCell else { return cell }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GenericCell", for: indexPath)
+        guard let episodeCell = cell as? GenericCell else { return cell }
         
         var seasonEpisodes: [EpisodeResponse] = []
         for episode in episodes {
@@ -57,13 +59,14 @@ extension EpisodesViewController: UITableViewDataSource {
                 seasonEpisodes.append(episode)
             }
         }
-
-        episodeCell.configureEpisodeCell(episodeTitle: seasonEpisodes[indexPath.row].title)
+        episodeCell.configureCell(cellTitle: seasonEpisodes[indexPath.row].title)
         return episodeCell
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard let seasons = Int(episodes.last!.season) else { return 0}
+        guard
+            let lastEpisode = episodes.last?.season,
+            let seasons = Int(lastEpisode) else { return 0}
         return seasons
     }
     
@@ -79,10 +82,52 @@ extension EpisodesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedEpisode = episodes.filter {
             Int($0.season.trimmingCharacters(in: .whitespacesAndNewlines)) == indexPath.section + 1 &&
-            Int($0.episode) == indexPath.row + 1 } // rethink
+            Int($0.episode) == indexPath.row + 1 }
         
         let episodeDetailViewController = EpisodesDetailViewController()
         episodeDetailViewController.selectedEpisode = selectedEpisode.first
         show(episodeDetailViewController, sender: nil)
+    }
+}
+
+// MARK: - EpisodesFilterViewControllerDelegate Methods
+
+extension EpisodesViewController: EpisodesFilterViewControllerDelegate {
+    func episodesFilterApplied(filteredEpisodes: [EpisodeResponse]) {
+        episodes = filteredEpisodes
+        episodesTableView.reloadData()
+    }
+}
+
+// MARK: - Helpers
+
+extension EpisodesViewController {
+    private func updateUI() {
+        let cellNib = UINib(nibName: "GenericCell", bundle: nil)
+        episodesTableView.register(cellNib, forCellReuseIdentifier: "GenericCell")
+        episodesTableView.dataSource = self
+        episodesTableView.delegate = self
+        episodesTableView.reloadData()
+        removeSpinnerView()
+    }
+}
+
+// MARK: - API Calls
+
+extension EpisodesViewController {
+    func getEpisodes() {
+        apiManager.getEpisodes({ [weak self] result in
+            switch result {
+            case .success(let episodes):
+                print(episodes)
+                DispatchQueue.main.async {
+                    self?.episodes = episodes
+                    self?.unfilteredEpisodes = episodes
+                    self?.updateUI()
+                }
+            case .failure(_):
+                print("error")
+            }
+        })
     }
 }

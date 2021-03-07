@@ -58,14 +58,28 @@ extension AccountManager {
         guard let accounts = UserDefaultsManager.accounts else {
             throw AccountManagerError.accountNotFound
         }
-        for account in accounts where account.username == username {
+        for var account in accounts where account.username == username {
             guard password == UserDefaultsManager.getPassword(username: account.username) else {
                 throw AccountManagerError.wrongPassword
             }
             loggedInAccount = account
+            UserDefaultsManager.updateLoginStatus(&account)
             return
         }
+        
         throw AccountManagerError.accountNotFound
+    }
+    
+    static func checkLogInStatus() -> Bool {
+        if let accounts = UserDefaultsManager.accounts {
+            for account in accounts {
+                if account.isloggedIn == true {
+                    loggedInAccount = account
+                    return true
+                }
+            }
+        }
+        return false
     }
 }
 

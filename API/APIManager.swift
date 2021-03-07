@@ -36,9 +36,9 @@ struct APIManager {
         }.resume()
     }
     
-    func getEpisodeData(id: Int, _ completion: @escaping (Result<EpisodeResponse, APIError>) -> Void) {
+    func getEpisodeInfo(id: Int, _ completion: @escaping (Result<EpisodeResponse, APIError>) -> Void) {
         
-        guard let url = APIEndpoint.episodeData(id: id).url
+        guard let url = APIEndpoint.episodeInfo(id: id).url
         else {
             completion(.failure(.failedURLCreation))
             return
@@ -50,11 +50,11 @@ struct APIManager {
                 return
             }
 
-            guard let episodeDataResponse = try? JSONDecoder().decode([EpisodeResponse].self, from: data) else {
+            guard let episodeDataResponse = try? JSONDecoder().decode(EpisodeResponse.self, from: data) else {
                 completion(.failure(.unexpectedDataFormat))
                 return
             }
-            completion(.success(episodeDataResponse[0])) // Is this legal ???
+            completion(.success(episodeDataResponse))
         }.resume()
     }
     
@@ -77,6 +77,28 @@ struct APIManager {
                 return
             }
             completion(.success(charactersResponse))
+        }.resume()
+    }
+    
+    func getCharacterInfo(name: String, _ completion: @escaping (Result<CharacterResponse, APIError>) -> Void) {
+        
+        guard let url = APIEndpoint.characterInfo(name: name).url
+        else {
+            completion(.failure(.failedURLCreation))
+            return
+        }
+
+        session.dataTask(with: url) { data, response, error in
+            guard let data = data else {
+                completion(.failure(.failedRequest))
+                return
+            }
+
+            guard let characterInfoResponse = try? JSONDecoder().decode([CharacterResponse].self, from: data) else {
+                completion(.failure(.unexpectedDataFormat))
+                return
+            }
+            completion(.success(characterInfoResponse.first!))
         }.resume()
     }
     

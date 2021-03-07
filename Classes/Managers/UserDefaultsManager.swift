@@ -32,6 +32,23 @@ struct UserDefaultsManager {
         savedAccounts.append(account)
         accounts = savedAccounts
     }
+    
+    static func updateLoginStatus(_ updatingAccount: inout Account) {
+        var oldAccounts = [Account]()
+        var newAccounts = [Account]()
+        
+        if let accounts = accounts {
+            oldAccounts = accounts
+        }
+        
+        for var account in oldAccounts {
+            if account.username == updatingAccount.username {
+                account.isloggedIn = !account.isloggedIn
+            }
+            newAccounts.append(account)
+        }
+        accounts = newAccounts
+    }
  }
 
 // MARK: - Helpers

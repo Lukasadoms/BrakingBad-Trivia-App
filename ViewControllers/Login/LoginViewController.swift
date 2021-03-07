@@ -16,11 +16,17 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var submitButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        LoginViewController().modalPresentationStyle = .fullScreen
+      
         configureView()
         usernameTextField.delegate = self
         passwordTextField.delegate = self
         passwordReenterTextField.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if AccountManager.checkLogInStatus() {
+            proceedToHomeViewController()
+        }
     }
 
     @IBAction func modeDidChange(_ sender: UISegmentedControl) {

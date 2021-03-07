@@ -11,8 +11,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EpisodesFilterViewController" customModule="Project1" customModuleProvider="target">
             <connections>
                 <outlet property="characterTableView" destination="Obr-mr-YAu" id="NRY-Qg-t0o"/>
-                <outlet property="dateFromPicker" destination="2yj-L2-zjV" id="cP4-8Y-thE"/>
-                <outlet property="dateToPicker" destination="aBB-Hc-lJ3" id="9EI-oG-bfX"/>
+                <outlet property="dateFromTextField" destination="zwN-vO-AwM" id="u3i-Te-2zI"/>
+                <outlet property="dateToTextField" destination="32I-Za-hqC" id="y9J-H1-Cyg"/>
                 <outlet property="seasonTextField" destination="1CF-pW-Iek" id="Dev-Ac-HG1"/>
                 <outlet property="view" destination="FbM-xC-HDJ" id="0n0-9y-2C7"/>
             </connections>
@@ -32,8 +32,8 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3sR-do-GSD">
                                     <rect key="frame" x="0.0" y="0.0" width="290" height="200"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="LX9-G5-zbr">
-                                            <rect key="frame" x="0.0" y="10" width="290" height="174.33333333333334"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="LX9-G5-zbr">
+                                            <rect key="frame" x="0.0" y="10" width="290" height="181.33333333333334"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter by:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lMY-eg-yON">
                                                     <rect key="frame" x="0.0" y="0.0" width="290" height="25.333333333333332"/>
@@ -41,59 +41,60 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Otb-Ys-GZ1">
-                                                    <rect key="frame" x="0.0" y="30.333333333333343" width="169.33333333333334" height="34"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Otb-Ys-GZ1">
+                                                    <rect key="frame" x="0.0" y="43.333333333333343" width="290" height="34"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Season:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="euU-Mr-MfD">
-                                                            <rect key="frame" x="0.0" y="0.0" width="73.333333333333329" height="34"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="140" height="34"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Season 1" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1CF-pW-Iek">
-                                                            <rect key="frame" x="83.333333333333343" y="0.0" width="86" height="34"/>
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pick a season" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1CF-pW-Iek">
+                                                            <rect key="frame" x="150" y="0.0" width="140" height="34"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits"/>
                                                         </textField>
                                                     </subviews>
                                                 </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="eph-iz-m6b">
-                                                    <rect key="frame" x="0.0" y="69.333333333333343" width="276.66666666666669" height="50"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="eph-iz-m6b">
+                                                    <rect key="frame" x="0.0" y="95.333333333333314" width="290" height="34"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date from:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aJ4-sF-JkQ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="95.666666666666671" height="50"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="140" height="34"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="2yj-L2-zjV">
-                                                            <rect key="frame" x="105.66666666666666" y="0.0" width="170.99999999999997" height="50"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="50" id="KZu-2X-Q1r"/>
-                                                            </constraints>
-                                                        </datePicker>
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pick a date" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zwN-vO-AwM">
+                                                            <rect key="frame" x="150" y="0.0" width="140" height="34"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <textInputTraits key="textInputTraits"/>
+                                                        </textField>
                                                     </subviews>
                                                 </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="EgU-PR-ahm">
-                                                    <rect key="frame" x="0.0" y="124.33333333333331" width="281.66666666666669" height="50"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="EgU-PR-ahm">
+                                                    <rect key="frame" x="0.0" y="147.33333333333331" width="290" height="34"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date to:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BFm-sU-CX5">
-                                                            <rect key="frame" x="0.0" y="12.333333333333369" width="71.666666666666671" height="25.333333333333329"/>
+                                                            <rect key="frame" x="0.0" y="4.3333333333333695" width="140" height="25.333333333333329"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="aBB-Hc-lJ3">
-                                                            <rect key="frame" x="81.666666666666657" y="0.0" width="199.99999999999997" height="50"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="50" id="usS-kg-BZS"/>
-                                                            </constraints>
-                                                        </datePicker>
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pick a date" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="32I-Za-hqC">
+                                                            <rect key="frame" x="150" y="0.0" width="140" height="34"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <textInputTraits key="textInputTraits"/>
+                                                        </textField>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Otb-Ys-GZ1" secondAttribute="trailing" id="CNV-Zi-Qpb"/>
+                                                <constraint firstAttribute="trailing" secondItem="EgU-PR-ahm" secondAttribute="trailing" id="JNf-yr-n41"/>
                                                 <constraint firstItem="lMY-eg-yON" firstAttribute="centerX" secondItem="LX9-G5-zbr" secondAttribute="centerX" id="KjC-JX-IDp"/>
+                                                <constraint firstAttribute="trailing" secondItem="eph-iz-m6b" secondAttribute="trailing" id="QWq-cI-ppK"/>
                                             </constraints>
                                         </stackView>
                                     </subviews>
@@ -118,6 +119,9 @@
                                     </constraints>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Apply"/>
+                                    <connections>
+                                        <action selector="applyButtonPressed:" destination="-1" eventType="touchUpInside" id="seh-lb-PEQ"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <constraints>

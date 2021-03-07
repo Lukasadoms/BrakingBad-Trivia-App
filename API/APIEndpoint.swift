@@ -9,20 +9,26 @@ import Foundation
 
 enum APIEndpoint {
     case episodes
-    case episodeData(id: Int)
+    case episodeInfo(id: Int)
     case charachters
+    case characterInfo(name: String)
     case characterQuotes(name: String)
-    
+
     var url: URL? {
         switch self {
         case .episodes:
-            return makeURL(endpoint: "api/episodes?series=Breaking+Bad")
-        case .episodeData(let id):
+            let queryItem = URLQueryItem(name: SeriesNameQueryKey, value: SeriesName)
+            return makeURL(endpoint: "api/episodes", queryItems: [queryItem])
+        case .episodeInfo(let id):
             return makeURL(endpoint: "api/episodes/\(id)")
         case .charachters:
-            return makeURL(endpoint: "api/characters?category=Breaking+Bad")
-        case .characterQuotes(let characterName):
-            let queryItem = URLQueryItem(name: AuthorNameQueryKey, value: "\(characterName)")
+            let queryItem = URLQueryItem(name: CategoryNameQueryKey, value: SeriesName)
+            return makeURL(endpoint: "api/characters", queryItems: [queryItem])
+        case .characterInfo(let name):
+            let queryItem = URLQueryItem(name: CharacterNameQueryKey, value: name)
+            return makeURL(endpoint: "api/characters", queryItems: [queryItem])
+        case .characterQuotes(let name):
+            let queryItem = URLQueryItem(name: AuthorNameQueryKey, value: name)
             return makeURL(endpoint: "api/quote", queryItems: [queryItem])
         }
     }
@@ -31,9 +37,25 @@ enum APIEndpoint {
 // MARK: - Helpers
 
 private extension APIEndpoint {
+    
+    var SeriesNameQueryKey: String {
+        "series"
+    }
+    
+    var CategoryNameQueryKey: String {
+        "category"
+    }
 
     var AuthorNameQueryKey: String {
         "author"
+    }
+    
+    var CharacterNameQueryKey: String {
+        "name"
+    }
+    
+    var SeriesName: String {
+        "Breaking+Bad"
     }
 
     var BaseURL: String {
