@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CharacterDetailViewController: ParentViewController, UITableViewDelegate {
+class CharacterDetailViewController: ParentViewController {
     
     @IBOutlet weak var characterNameLabel: UILabel!
     @IBOutlet weak var characterDateOfBirthLabel: UILabel!
@@ -17,11 +17,14 @@ class CharacterDetailViewController: ParentViewController, UITableViewDelegate {
     var selectedCharacter: CharacterResponse?
     var selectedCharacterName: String?
     var apiManager = APIManager()
+    var quotesManager = QuotesManager()
     var group = DispatchGroup()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         createSpinnerView()
+        let cellNib = UINib(nibName: "QuoteCell", bundle: nil)
+        quoteTableView.register(cellNib, forCellReuseIdentifier: "QuoteCell")
         quoteTableView.delegate = self
         group.enter()
         group.enter()
@@ -43,11 +46,27 @@ extension CharacterDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuoteCell", for: indexPath)
         guard let quoteCell = cell as? QuoteCell else { return cell }
+        quoteCell.likedButtonLabel.isHidden = true
+        quoteCell.configureQuoteCell(quoteTitle: quotes[indexPath.row].quoteText)
         
-        quoteCell.configureQuoteCell(quoteTitle: quotes[indexPath.row].quote)
         return quoteCell
     }
 }
+
+// MARK: - UITableViewDelegate Methods
+
+extension CharacterDetailViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: false)
+        let selectedQuote = quotes[indexPath.row]
+        
+        QuotesManager.quotesAction(quote: selectedQuote)
+        quoteTableView.reloadData()
+    }
+}
+
+// MARK: - API Calls
 
 extension CharacterDetailViewController {
     func getCharacterInfo() {
@@ -84,6 +103,8 @@ extension CharacterDetailViewController {
         }
     }
 }
+
+// MARK: - Helpers
 
 extension CharacterDetailViewController {
     func updateUI() {

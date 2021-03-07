@@ -7,16 +7,15 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: ParentViewController {
 
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var passwordReenterTextField: UITextField!
-    
     @IBOutlet weak var submitButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-      
         configureView()
         usernameTextField.delegate = self
         passwordTextField.delegate = self
@@ -77,21 +76,6 @@ class LoginViewController: UIViewController {
         passwordReenterTextField.isHidden = true
         submitButton.isEnabled = false
         submitButton.alpha = 0.5
-        if AccountManager.loggedInAccount != nil {
-            proceedToHomeViewController()
-        }
-    }
-    
-    func showAlert(message: String) {
-        let alert = UIAlertController(title: "Uh-oh", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true)
-    }
-    
-    func proceedToHomeViewController() {
-        let homeViewController = HomeViewController()
-        homeViewController.modalPresentationStyle = .fullScreen
-        present(homeViewController, animated: true, completion: nil)
     }
 }
 
@@ -115,5 +99,4 @@ extension LoginViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
-    
 }

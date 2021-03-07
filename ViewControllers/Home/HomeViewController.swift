@@ -29,6 +29,8 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func quotesButtonTapped(_ sender: UIButton) {
+        let quotesViewController = QuotesViewController()
+        show(quotesViewController, sender: nil)
     }
     
     @IBAction func logoutButtonTapped(_ sender: UIButton) {

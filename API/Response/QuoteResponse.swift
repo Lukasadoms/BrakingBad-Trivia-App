@@ -7,13 +7,14 @@
 
 import Foundation
 
-struct QuoteResponse: Decodable {
+struct QuoteResponse: Codable {
     var quoteID: Int
-    var quote: String
+    var quoteText: String
     var author: String
     
     enum CodingKeys: String, CodingKey {
         case quoteID = "quote_id"
-        case quote, author
+        case quoteText = "quote"
+        case author
     }
 }

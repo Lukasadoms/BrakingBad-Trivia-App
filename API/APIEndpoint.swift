@@ -13,23 +13,26 @@ enum APIEndpoint {
     case charachters
     case characterInfo(name: String)
     case characterQuotes(name: String)
+    case randomQuote
 
     var url: URL? {
         switch self {
         case .episodes:
             let queryItem = URLQueryItem(name: SeriesNameQueryKey, value: SeriesName)
-            return makeURL(endpoint: "api/episodes", queryItems: [queryItem])
+            return makeURL(endpoint: "/api/episodes", queryItems: [queryItem])
         case .episodeInfo(let id):
-            return makeURL(endpoint: "api/episodes/\(id)")
+            return makeURL(endpoint: "/api/episodes/\(id)")
         case .charachters:
             let queryItem = URLQueryItem(name: CategoryNameQueryKey, value: SeriesName)
-            return makeURL(endpoint: "api/characters", queryItems: [queryItem])
+            return makeURL(endpoint: "/api/characters", queryItems: [queryItem])
         case .characterInfo(let name):
             let queryItem = URLQueryItem(name: CharacterNameQueryKey, value: name)
-            return makeURL(endpoint: "api/characters", queryItems: [queryItem])
+            return makeURL(endpoint: "/api/characters", queryItems: [queryItem])
         case .characterQuotes(let name):
             let queryItem = URLQueryItem(name: AuthorNameQueryKey, value: name)
-            return makeURL(endpoint: "api/quote", queryItems: [queryItem])
+            return makeURL(endpoint: "/api/quote", queryItems: [queryItem])
+        case .randomQuote:
+            return makeURL(endpoint: "/api/quote/random")
         }
     }
 }
@@ -59,7 +62,7 @@ private extension APIEndpoint {
     }
 
     var BaseURL: String {
-        "https://www.breakingbadapi.com/"
+        "https://www.breakingbadapi.com"
     }
 
     func makeURL(endpoint: String, queryItems: [URLQueryItem]? = nil) -> URL? {

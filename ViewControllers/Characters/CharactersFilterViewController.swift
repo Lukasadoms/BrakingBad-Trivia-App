@@ -102,7 +102,6 @@ extension CharactersFilterViewController {
     }
 }
 
-
 // MARK: - Helpers
 
 extension CharactersFilterViewController {

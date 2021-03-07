@@ -25,4 +25,16 @@ class ParentViewController: UIViewController {
             self.child.removeFromParent()
         }
     }
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "Uh-oh", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
+    func proceedToHomeViewController() {
+        let homeViewController = HomeViewController()
+        homeViewController.modalPresentationStyle = .fullScreen
+        present(homeViewController, animated: true, completion: nil)
+    }
 }

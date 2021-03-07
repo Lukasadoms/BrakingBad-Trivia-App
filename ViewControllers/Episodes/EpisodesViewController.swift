@@ -119,7 +119,6 @@ extension EpisodesViewController {
         apiManager.getEpisodes({ [weak self] result in
             switch result {
             case .success(let episodes):
-                print(episodes)
                 DispatchQueue.main.async {
                     self?.episodes = episodes
                     self?.unfilteredEpisodes = episodes

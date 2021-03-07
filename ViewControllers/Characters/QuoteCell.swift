@@ -15,9 +15,10 @@ class QuoteCell: UITableViewCell {
     func configureQuoteCell(quoteTitle: String) {
         quoteLabel.text = quoteTitle
         quoteLabel.sizeToFit()
-    }
-    
-    @IBAction func heartButtonTapped(_ sender: Any) {
-        
+        if let likedQuotes = QuotesManager.getUserLikedQuotes() {
+            if likedQuotes.contains(where: { $0.quoteText == quoteTitle }) {
+                likedButtonLabel.isHidden = false
+            }
+        }
     }
 }

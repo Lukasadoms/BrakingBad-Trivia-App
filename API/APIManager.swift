@@ -123,4 +123,28 @@ struct APIManager {
             completion(.success(characterQuoteDataResponse))
         }.resume()
     }
+    
+    // MARK: - Get Random Quote
+    
+    func getRandomQuote(_ completion: @escaping (Result<QuoteResponse, APIError>) -> Void) {
+        
+        guard let url = APIEndpoint.randomQuote.url
+        else {
+            completion(.failure(.failedURLCreation))
+            return
+        }
+
+        session.dataTask(with: url) { data, response, error in
+            guard let data = data else {
+                completion(.failure(.failedRequest))
+                return
+            }
+
+            guard let randomQuoteDataResponse = try? JSONDecoder().decode([QuoteResponse].self, from: data) else {
+                completion(.failure(.unexpectedDataFormat))
+                return
+            }
+            completion(.success(randomQuoteDataResponse.first!))
+        }.resume()
+    }
 }
