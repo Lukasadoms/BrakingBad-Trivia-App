@@ -12,5 +12,17 @@ enum APIError: Error {
     case unexpectedDataFormat
     case failedResponse
     case failedURLCreation
-    case failedAuthentication
+    
+    var errorDescription: String {
+        switch self {
+        case .failedRequest:
+            return "Missing required values, or passwords don`t match!"
+        case .unexpectedDataFormat:
+            return "This username is already taken!"
+        case .failedResponse:
+            return "Password is incorrect!"
+        case .failedURLCreation:
+            return "Account with this username is not found!"
+        }
+    }
 }

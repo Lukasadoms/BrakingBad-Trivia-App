@@ -68,12 +68,12 @@ extension QuotesViewController: UITableViewDataSource {
         switch indexPath.section {
         case 0:
             if let mappedQuotes = QuotesManager.mappedQuotes {
-                quoteCell.configureQuoteCell(quoteTitle: mappedQuotes[indexPath.row].quoteText)
+                quoteCell.configureQuoteCell(quoteTitle: mappedQuotes[indexPath.row].quote.quoteText)
             }
             return quoteCell
         case 1:
             if let userLikedQuotes = QuotesManager.getUserLikedQuotes() {
-                quoteCell.configureQuoteCell(quoteTitle: userLikedQuotes[indexPath.row].quoteText)
+                quoteCell.configureQuoteCell(quoteTitle: userLikedQuotes[indexPath.row].quote.quoteText)
                 return quoteCell
             }
         case 2:
@@ -91,14 +91,25 @@ extension QuotesViewController: UITableViewDataSource {
 
 extension QuotesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        if indexPath.section == 0 {
+            if let mappedQuotes = QuotesManager.mappedQuotes {
+                let likedQuote = mappedQuotes[indexPath.row]
+                QuotesManager.quotesAction(quote: likedQuote.quote)
+                quotesTableView.reloadData()
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            QuotesManager.dislikeQuote(
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//        }
+        if indexPath.section == 1 {
+            if let userLikedQuotes = QuotesManager.getUserLikedQuotes() {
+                if editingStyle == .delete {
+                    QuotesManager.quotesAction(quote: userLikedQuotes[indexPath.row].quote)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    quotesTableView.reloadData()
+                }
+            }
+        }
     }
 }
 
@@ -127,11 +138,8 @@ extension QuotesViewController {
                     self?.updateUI()
                 }
             case .failure(let error):
-                print(error)
+                self?.showAlert(message: error.errorDescription)
             }
         }
     }
 }
-
-
-

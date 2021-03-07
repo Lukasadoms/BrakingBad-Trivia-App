@@ -37,6 +37,8 @@ final class EpisodesDetailViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDataSource Methods
+
 extension EpisodesDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let selectedEpisode = selectedEpisode {
@@ -70,7 +72,6 @@ extension EpisodesDetailViewController: UITableViewDelegate {
             let characterDetailViewController = CharacterDetailViewController()
             characterDetailViewController.selectedCharacterName = selectedCharacter
             show(characterDetailViewController, sender: nil)
-            
         }
     }
 }

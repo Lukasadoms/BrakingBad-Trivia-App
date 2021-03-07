@@ -72,7 +72,7 @@ extension CharactersViewController {
                     self?.updateUI()
                 }
             case .failure(let error):
-                print(error)
+                self?.showAlert(message: error.errorDescription)
             }
         })
     }

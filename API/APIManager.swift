@@ -14,6 +14,8 @@ struct APIManager {
         return URLSession(configuration: configuration)
     }
     
+    // MARK: - Get All Episodes
+    
     func getEpisodes(_ completion: @escaping (Result<[EpisodeResponse], APIError>) -> Void) {
 
         guard let url = APIEndpoint.episodes.url
@@ -35,6 +37,8 @@ struct APIManager {
             completion(.success(episodesResponse))
         }.resume()
     }
+    
+    // MARK: - Get Episode Info
     
     func getEpisodeInfo(id: Int, _ completion: @escaping (Result<EpisodeResponse, APIError>) -> Void) {
         
@@ -58,6 +62,8 @@ struct APIManager {
         }.resume()
     }
     
+    // MARK: - Get All Characters
+    
     func getCharacters(_ completion: @escaping (Result<[CharacterResponse], APIError>) -> Void) {
 
         guard let url = APIEndpoint.charachters.url
@@ -80,6 +86,8 @@ struct APIManager {
         }.resume()
     }
     
+    // MARK: - Get Character Info
+    
     func getCharacterInfo(name: String, _ completion: @escaping (Result<CharacterResponse, APIError>) -> Void) {
         
         guard let url = APIEndpoint.characterInfo(name: name).url
@@ -101,6 +109,8 @@ struct APIManager {
             completion(.success(characterInfoResponse.first!))
         }.resume()
     }
+    
+    // MARK: - Get Character Quotes
     
     func getCharacterQuotes(name: String, _ completion: @escaping (Result<[QuoteResponse], APIError>) -> Void) {
         

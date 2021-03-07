@@ -79,7 +79,7 @@ extension CharacterDetailViewController {
                         self?.group.leave()
                     }
                 case .failure(let error):
-                    print(error)
+                    self?.showAlert(message: error.errorDescription)
                     self?.group.leave()
                 }
             })
@@ -96,7 +96,7 @@ extension CharacterDetailViewController {
                         self?.group.leave()
                     }
                 case .failure(let error):
-                    print(error)
+                    self?.showAlert(message: error.errorDescription)
                     self?.group.leave()
                 }
             })

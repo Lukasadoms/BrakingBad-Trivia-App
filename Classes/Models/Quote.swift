@@ -8,6 +8,6 @@
 import Foundation
 
 struct Quote: Codable {
-    var quoteText: String
+    var quote: QuoteResponse
     var likedByUsers: [Account] = []
 }

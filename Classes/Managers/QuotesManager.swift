@@ -19,19 +19,19 @@ struct QuotesManager {
 
     static func likeQuote(quote: QuoteResponse) {
         if let likedQuotes = UserDefaultsManager.likedQuotes {
-            let likedQuote = likedQuotes.filter { $0.quoteText == quote.quoteText }
+            let likedQuote = likedQuotes.filter { $0.quote.quoteText == quote.quoteText }
             if let updatedQuote = likedQuote.first {
                 var updatedQuote2 = updatedQuote
                 updatedQuote2.likedByUsers.append(AccountManager.loggedInAccount!)
                 UserDefaultsManager.deleteLikedQuote(quote: updatedQuote)
                 UserDefaultsManager.saveLikedQuote(quote: updatedQuote2)
             } else {
-                var firstQuote = Quote(quoteText: quote.quoteText)
+                var firstQuote = Quote(quote: quote)
                 firstQuote.likedByUsers.append(AccountManager.loggedInAccount!)
                 UserDefaultsManager.saveLikedQuote(quote: firstQuote)
             }
         } else {
-            var firstQuote = Quote(quoteText: quote.quoteText)
+            var firstQuote = Quote(quote: quote)
             firstQuote.likedByUsers.append(AccountManager.loggedInAccount!)
             UserDefaultsManager.saveLikedQuote(quote: firstQuote)
         }
@@ -39,7 +39,7 @@ struct QuotesManager {
     
     static func dislikeQuote(quote: QuoteResponse) {
         if let likedQuotes = UserDefaultsManager.likedQuotes {
-            let dislikedQuote = likedQuotes.filter { $0.quoteText == quote.quoteText }
+            let dislikedQuote = likedQuotes.filter { $0.quote.quoteText == quote.quoteText }
             var updatedQuote = dislikedQuote.first
             updatedQuote!.likedByUsers.removeAll(where: {$0.username == AccountManager.loggedInAccount!.username})
             UserDefaultsManager.deleteLikedQuote(quote: dislikedQuote.first!)
@@ -64,7 +64,7 @@ struct QuotesManager {
     static func quotesAction(quote: QuoteResponse) {
         if let userLikedQuotes = getUserLikedQuotes() {
             for userLikedQuote in userLikedQuotes {
-                if userLikedQuote.quoteText == quote.quoteText {
+                if userLikedQuote.quote.quoteText == quote.quoteText {
                     QuotesManager.dislikeQuote(quote: quote)
                     return
                 }

@@ -95,8 +95,8 @@ extension CharactersFilterViewController {
                     self?.episodes = episodes
                     self?.removeSpinnerView()
                 }
-            case .failure(_):
-                print("error")
+            case .failure(let error):
+                self?.showAlert(message: error.errorDescription)
             }
         })
     }

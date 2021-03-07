@@ -124,8 +124,8 @@ extension EpisodesViewController {
                     self?.unfilteredEpisodes = episodes
                     self?.updateUI()
                 }
-            case .failure(_):
-                print("error")
+            case .failure(let error):
+                self?.showAlert(message: error.errorDescription)
             }
         })
     }

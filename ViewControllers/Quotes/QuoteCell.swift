@@ -16,7 +16,7 @@ class QuoteCell: UITableViewCell {
         quoteLabel.text = quoteTitle
         quoteLabel.sizeToFit()
         if let likedQuotes = QuotesManager.getUserLikedQuotes() {
-            if likedQuotes.contains(where: { $0.quoteText == quoteTitle }) {
+            if likedQuotes.contains(where: { $0.quote.quoteText == quoteTitle }) {
                 likedButtonLabel.isHidden = false
             }
         }

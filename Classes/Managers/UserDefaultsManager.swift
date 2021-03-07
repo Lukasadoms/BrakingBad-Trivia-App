@@ -68,7 +68,7 @@ struct UserDefaultsManager {
         if let quotes = likedQuotes {
             savedQuotes = quotes
         }
-        savedQuotes.removeAll { $0.quoteText == quote.quoteText }
+        savedQuotes.removeAll { $0.quote.quoteText == quote.quote.quoteText }
         savedQuotes.append(quote)
         likedQuotes = savedQuotes
     }
