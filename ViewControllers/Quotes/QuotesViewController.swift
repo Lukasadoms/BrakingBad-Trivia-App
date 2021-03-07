@@ -45,6 +45,9 @@ extension QuotesViewController: UITableViewDataSource {
         switch section {
         case 0:
             if let mappedQuotes = QuotesManager.mappedQuotes {
+                if mappedQuotes.count > 2 {
+                    return 3
+                }
                 return mappedQuotes.count
             }
             return 0
@@ -89,6 +92,13 @@ extension QuotesViewController: UITableViewDataSource {
 extension QuotesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            QuotesManager.dislikeQuote(
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//        }
     }
 }
 

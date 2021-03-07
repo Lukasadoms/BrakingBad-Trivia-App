@@ -10,39 +10,41 @@ import Foundation
 struct QuotesManager {
     static var mappedQuotes: [Quote]? {
         if let likedQuotes = UserDefaultsManager.likedQuotes {
-            var mappedQuotes = likedQuotes.map { ($0, 1) }
-            var topQuotes: [Quote] = []
-            var topQuote: Quote?
-            var quoteMaxCount = 0
-            for _ in 1...3 {
-                quoteMaxCount = 0
-                topQuote = nil
-                for quote in mappedQuotes {
-                    if quote.1 > quoteMaxCount {
-                        quoteMaxCount = quote.1
-                        topQuote = quote.0
-                    }
-                }
-                if let topQuote = topQuote {
-                    topQuotes.append(topQuote)
-                    mappedQuotes.removeAll { $0.quoteText == topQuote.quoteText }
-                }
-            }
-            return topQuotes
-        }
-        return nil
+            var sortedQuotes = likedQuotes
+            sortedQuotes.sort { $0.likedByUsers.count > $1.likedByUsers.count }
+            return sortedQuotes
+        } else { return nil }
     }
-    
+
+
     static func likeQuote(quote: QuoteResponse) {
-        var newLikedQuote = Quote(quoteText: quote.quoteText)
-        newLikedQuote.likedByUsers.append(AccountManager.loggedInAccount!)
-        UserDefaultsManager.saveLikedQuote(quote: newLikedQuote)
+        if let likedQuotes = UserDefaultsManager.likedQuotes {
+            let likedQuote = likedQuotes.filter { $0.quoteText == quote.quoteText }
+            if let updatedQuote = likedQuote.first {
+                var updatedQuote2 = updatedQuote
+                updatedQuote2.likedByUsers.append(AccountManager.loggedInAccount!)
+                UserDefaultsManager.deleteLikedQuote(quote: updatedQuote)
+                UserDefaultsManager.saveLikedQuote(quote: updatedQuote2)
+            } else {
+                var firstQuote = Quote(quoteText: quote.quoteText)
+                firstQuote.likedByUsers.append(AccountManager.loggedInAccount!)
+                UserDefaultsManager.saveLikedQuote(quote: firstQuote)
+            }
+        } else {
+            var firstQuote = Quote(quoteText: quote.quoteText)
+            firstQuote.likedByUsers.append(AccountManager.loggedInAccount!)
+            UserDefaultsManager.saveLikedQuote(quote: firstQuote)
+        }
     }
     
     static func dislikeQuote(quote: QuoteResponse) {
-        var dislikedQuote = Quote(quoteText: quote.quoteText)
-        dislikedQuote.likedByUsers.removeAll(where: {$0.username == AccountManager.loggedInAccount!.username})
-        UserDefaultsManager.deleteLikedQuote(quote: dislikedQuote)
+        if let likedQuotes = UserDefaultsManager.likedQuotes {
+            let dislikedQuote = likedQuotes.filter { $0.quoteText == quote.quoteText }
+            var updatedQuote = dislikedQuote.first
+            updatedQuote!.likedByUsers.removeAll(where: {$0.username == AccountManager.loggedInAccount!.username})
+            UserDefaultsManager.deleteLikedQuote(quote: dislikedQuote.first!)
+            UserDefaultsManager.saveLikedQuote(quote: updatedQuote!)
+        }
     }
     
     static func getUserLikedQuotes() -> [Quote]? {
