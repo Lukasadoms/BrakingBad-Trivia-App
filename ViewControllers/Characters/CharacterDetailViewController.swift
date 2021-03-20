@@ -23,9 +23,6 @@ class CharacterDetailViewController: ParentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         createSpinnerView()
-        let cellNib = UINib(nibName: "QuoteCell", bundle: nil)
-        quoteTableView.register(cellNib, forCellReuseIdentifier: "QuoteCell")
-        quoteTableView.delegate = self
         group.enter()
         group.enter()
         getCharacterInfo()
@@ -111,10 +108,12 @@ extension CharacterDetailViewController {
         let cellNib = UINib(nibName: "QuoteCell", bundle: nil)
         quoteTableView.register(cellNib, forCellReuseIdentifier: "QuoteCell")
         quoteTableView.dataSource = self
+        quoteTableView.delegate = self
         quoteTableView.reloadData()
-        guard let selectedCharacter = selectedCharacter else { return }
-        characterNameLabel.text = "Name: \(selectedCharacter.name)"
-        characterDateOfBirthLabel.text = "DOB: \(selectedCharacter.birthday)"
+        if let selectedCharacter = selectedCharacter {
+            characterNameLabel.text = "Name: \(selectedCharacter.name)"
+            characterDateOfBirthLabel.text = "DOB: \(selectedCharacter.birthday)"
+        }
         removeSpinnerView()
     }
 }
