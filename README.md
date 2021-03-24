@@ -12,7 +12,11 @@ Mockups of some views are provided as well. They show general ideas of views but
 This application uses Breaking Bad API, documentation can be found @ https://breakingbadapi.com.
 It is part of the task to understand which API endpoints to use to fulfil the requirements.
 
-![Screenshot](BreakingBadAppScreenshot.png)
 ![Screenshot](BreakingBadAppScreenshot2.png)
-![Screenshot](BreakingBadAppScreenShot3.png)
+
 ![Screenshot](BreakingBadAppScreenshot4.png)
+
+![Screenshot](BreakingBadAppScreenshot.png)
+
+![Screenshot](BreakingBadAppScreenShot3.png)
+
